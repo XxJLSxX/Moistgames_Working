@@ -1,0 +1,84 @@
+CREATE DATABASE MoistureGames;
+USE MoistureGames;
+
+CREATE TABLE Payment_Method(
+    PMethod_ID INT(5) PRIMARY KEY AUTO_INCREMENT,
+    PMethod_Name VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE Users(
+    User_ID INT(10) PRIMARY KEY AUTO_INCREMENT,
+    Name VARCHAR(100) NOT NULL,
+    User_Name VARCHAR(50) NOT NULL,
+    Email VARCHAR(50) NOT NULL,
+    Password VARCHAR(500) NOT NULL,
+    PMethod_ID INT(5) NOT NULL,
+    FOREIGN KEY (PMethod_ID) REFERENCES Payment_Method(PMethod_ID)
+);
+
+CREATE TABLE Company(
+    Company_ID INT(10) PRIMARY KEY AUTO_INCREMENT,
+    Company_Name VARCHAR(100) NOT NULL,
+    Company_Email VARCHAR(100) NOT NULL,
+    Company_Address VARCHAR(200) NOT NULL,
+    Company_Desc VARCHAR(2000) NOT NULL
+);
+
+CREATE TABLE Category(
+    GameCategory_ID INT(10) PRIMARY KEY AUTO_INCREMENT,
+    Category_Name VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE Games(
+    Game_ID INT(10) PRIMARY KEY AUTO_INCREMENT,
+    Game_Name VARCHAR(100) NOT NULL,
+    Game_Desc VARCHAR(2000) NOT NULL,
+    Game_Downloads INT NOT NULL,
+    Price DECIMAL(10,2) NOT NULL,
+    Category_ID INT(10) NOT NULL,
+    Company_ID INT(10) NOT NULL,
+    FOREIGN KEY (Category_ID) REFERENCES Category(GameCategory_ID),
+    FOREIGN KEY (Company_ID) REFERENCES Company(Company_ID)
+);
+
+CREATE TABLE Featured_Post(
+    Featured_ID INT(10) PRIMARY KEY AUTO_INCREMENT,
+    Game_ID INT(10) NOT NULL,
+    FOREIGN KEY (Game_ID) REFERENCES Games(Game_ID)
+);
+
+CREATE TABLE Rating(
+    Rate_ID INT(10) PRIMARY KEY AUTO_INCREMENT,
+    Review VARCHAR(500) NOT NULL, -- Increased VARCHAR size for reviews
+    Review_Date DATE,
+    Review_Time TIME,
+    User_ID INT(10) NOT NULL,
+    Game_ID INT(10) NOT NULL,
+    FOREIGN KEY (User_ID) REFERENCES Users(User_ID),
+    FOREIGN KEY (Game_ID) REFERENCES Games(Game_ID)
+);
+
+CREATE TABLE Transaction(
+    Transaction_ID INT(10) PRIMARY KEY AUTO_INCREMENT,
+    User_ID INT(10) NOT NULL,
+    Game_ID INT(10) NOT NULL,
+    FOREIGN KEY (User_ID) REFERENCES Users(User_ID),
+    FOREIGN KEY (Game_ID) REFERENCES Games(Game_ID)
+);
+
+CREATE TABLE Payment(
+    Payment_ID INT(10) PRIMARY KEY AUTO_INCREMENT,
+    Price DECIMAL(10,2) NOT NULL,
+    PMethod_ID INT(5) NOT NULL,
+    Transaction_ID INT(10) NOT NULL,
+    FOREIGN KEY (Transaction_ID) REFERENCES Transaction(Transaction_ID),
+    FOREIGN KEY (PMethod_ID) REFERENCES Payment_Method(PMethod_ID)
+);
+
+CREATE TABLE Receipt(
+    Receipt_ID INT(10) PRIMARY KEY AUTO_INCREMENT,
+    Receipt_Date DATE,
+    Receipt_Time TIME,
+    Payment_ID INT(10) NOT NULL,
+    FOREIGN KEY (Payment_ID) REFERENCES Payment(Payment_ID)
+);
