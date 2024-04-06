@@ -1,70 +1,36 @@
-<?php
-session_start();
-require 'db/MoistFunctions.php';
+<?php include 'admin_css.php'; ?>
+<body style="background-color: #1e1e1e;">
+  <nav class="navbar">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand custom-color" href="#" style="margin-right: 15px;">
+        <img src="../images/logo.png" style="text-align: center; width:30px; height:30px" alt="Logo">
+        </a> 
+      </div>
+      <ul class="nav navbar-nav">
+        <li><a href="#">Games</a></li>
+        <li><a href="#">Game Developers</a></li>
+        <li><a href="#">Transactions</a></li>
+        <li><a href="#">Featured Post</a></li>
+      </ul>
+      <div class="navbar-right">
+      <a href="logout.php" class="log-out-button">Log Out</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+    <div class="container admin-container">
+        <h1 style=" font-size: 4.5vw; " >Hi there, Admin!</h1>
+        <p style="font-size: large">What would you like to do?</p>
+    </div>
+    <br>
+    <div class="container container-flex">
+      <div class="cards-container">
+        <a class="card" href="#">Add a Game<br><label class="gamepad"></label></a>
+        <a class="card" href="#">View Developers<br><label class="view-dev"></a>
+        <a class="card" href="#">Assign Featured Post<br><label class="image-png"></label></a>
+      </div>
+    </div>
 
-$moistureFunctions = new MoistFunctions($connection);
-$records = $moistureFunctions->showAll('users');
-?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Moisture Games</title>
-
-    <!-- CSS -->
-    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="db/design.css">
-
-    <!-- jS -->
-    <script src="bootstrap/js/bootstrap.js"></script>
-    
-</head>
-<body>
-<table>
-    <thead>
-        <tr>
-            <th>#</th>
-            <th>Name</th>
-            <th>User Name</th>
-            <th>Email</th>
-            <th>Payment Method</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php
-            $records_count = 0;
-            if (count($records) > 0) :
-                foreach ($records as $record) :
-        ?>
-            <tr>
-                <td><?= ++$records_count ?></td>
-                <td><?= $record[1] ?></td>
-                <td><?= $record[2] ?></td>
-                <td><?= $record[3] ?></td>
-                <td><?= $record[5] ?></td>
-                <td>
-                    <a class="btn btn-info" href="forms/students_update.php?id=<?= $record[0] ?>">Update</a>
-                    <a class="btn btn-warning" href="forms/students_delete.php?id=<?= $record[0] ?>">Delete</a>
-                </td>
-            </tr>
-        <?php endforeach;
-            else :
-        ?>
-            <tr>
-                <td colspan="6">No Record Found.</td>
-            </tr>
-        <?php endif; ?>
-    </tbody>
-    <tfoot>
-        <tr>
-            <th>#</th>
-            <th>Name</th>
-            <th>User Name</th>
-            <th>Email</th>
-            <th>Payment Method</th>
-        </tr>
-    </tfoot>
-</table>
-
+</body>
 </html>
