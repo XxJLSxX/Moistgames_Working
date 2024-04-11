@@ -1,6 +1,5 @@
 <?php
     session_start();
-    session_destroy();
     require '../db/MoistFunctions.php';
 
     if (isset($_SESSION['id']) && $_SESSION['id'] == '1') {

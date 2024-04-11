@@ -24,8 +24,7 @@
             header("Location: ");
         } catch (Exception $e) {
             echo "Error: $e";
-        }
-        
+        } 
     }
 ?>
 <!DOCTYPE html>
