@@ -28,10 +28,16 @@ class MoistFunctions {
         return $this->sqlExecute($sql); 
     }
     
-    public function showRecords($tbl, $where=null){
+    public function showRecords($tbl, $where=null, $join=null, $col1=null, $col2=null, $wherejoin=null) {
         $sql = "SELECT * FROM $tbl";
         if ($where != null) {
             $sql.= " Where $where";
+        }
+        if ($join != null) {
+            $sql.= " Left Join $join ON $col1 = $col2";
+            if ($wherejoin != null) {
+                $sql.= " Where $wherejoin";
+            }
         }
         return $this->sqlExecute($sql);
     }

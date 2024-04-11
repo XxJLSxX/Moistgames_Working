@@ -2,13 +2,16 @@
     require '../db/MoistFunctions.php';
     $moistFunctions = new MoistFunctions($connection);
 
+    $devs = $moistFunctions -> showRecords('developer');
+    
     if (isset($_POST['Add'])){
         $data = [];
         $Gname = $_POST['Game_Name'];
         
         //Input Date in Database Table
         $data['Game_Downloads'] = '0';
-        $data['Game_Date'] = date('Y-m-d');
+        $data['Upload_Date'] = date('Y-m-d');
+        $data['Game_Rating'] = '0';
         foreach ($_POST as $name => $val) {
             if ($name !== 'Add' && $name !== 'GameImage' && $name !== 'GameBackground' && $name !== 'Screenshot1' && $name !== 'Screenshot2' && $name !== 'Screenshot3') {
                 $data[$name] = $val;
@@ -32,11 +35,11 @@
         
         //Save and Rename image for GameImage
         $target_dir = "../Games/$Gname/";
-        $moistFunctions -> uploadFile($_FILES["GameImage"], $target_dir, $Gname, "$Gname-Image." . "png");
-        $moistFunctions -> uploadFile($_FILES["GameBackground"], $target_dir, $Gname, "$Gname-Background." . "png");
-        $moistFunctions -> uploadFile($_FILES["Screenshot1"], $target_dir, $Gname, "$Gname-Screenshot1." . "png");
-        $moistFunctions -> uploadFile($_FILES["Screenshot2"], $target_dir, $Gname, "$Gname-Screenshot2." . "png");
-        $moistFunctions -> uploadFile($_FILES["Screenshot3"], $target_dir, $Gname, "$Gname-Screenshot3." . "png");
+        $moistFunctions -> uploadFile($_FILES["GameImage"], $target_dir, $Gname, "Image." . "png");
+        $moistFunctions -> uploadFile($_FILES["GameBackground"], $target_dir, $Gname, "Background." . "png");
+        $moistFunctions -> uploadFile($_FILES["Screenshot1"], $target_dir, $Gname, "Screenshot1." . "png");
+        $moistFunctions -> uploadFile($_FILES["Screenshot2"], $target_dir, $Gname, "Screenshot2." . "png");
+        $moistFunctions -> uploadFile($_FILES["Screenshot3"], $target_dir, $Gname, "Screenshot3." . "png");
 
 
     }
@@ -139,6 +142,7 @@
         text-align: center;
         overflow: hidden;
     }
+   
     </style>
     <script>
         document.getElementById("inputFile").addEventListener("change", function() {
@@ -148,6 +152,7 @@
             this.setAttribute("data-title", "No file chosen");
         }
         });
+        
     </script>
 </head>
 <body style="background-color: #1e1e1e">
@@ -159,14 +164,16 @@
         <input type="text" name="Game_Name" required><br><br>
         
         <label for="developer">Game Developer</label><br>
-        <select name="Company_ID" class="form-select" required>
+        <select name="Developer_ID" class="form-select" onmousedown="this.size=5;" onclick="this.size=1" required>
             <option value="" disabled selected>Select Game Developer</option>
-            <!--
-            May Php code na mag lo loop na array para kunin yung id and name ng Game Developers
-            So if may pinili si user yung id nung pinili yung kailangang pumasok sa php code sa itaas
-            -->
-            <option value="1">1</option>
-            <option value="2">2</option>
+            <?php
+                if (count($devs) > 0) {
+                    foreach ($devs as $dev) {
+                        echo "<option value ='$dev[0]'>$dev[1]</option>";
+                    }
+                }
+            ?>
+            
         </select><br><br>
         
         <label for="price">Game Price</label><br>
@@ -175,10 +182,6 @@
         <label for="genre">Game Genre</label><br>
             <select name="Category" class="form-select" required>
                 <option value="" disabled selected>Select Game Category</option>
-                <!--
-                May Php code na mag lo loop na array para kunin yung id and name ng Game Developers
-                So if may pinili si user yung id nung pinili yung kailangang pumasok sa php code sa itaas
-                -->
                 <option value="1">1. Action</option>
                 <option value="2">2. Adventure</option>
                 <option value="3">3. RPG</option>

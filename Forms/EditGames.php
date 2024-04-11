@@ -1,5 +1,13 @@
 <?php
-    
+    require '../db/MoistFunctions.php';
+    $moistFunctions = new MoistFunctions($connection);
+    $id = $_GET['id'] ?? NULL;
+
+    if($id==NULL)
+        header("Location: Admin_Gamelib.php");
+    $data = $moistFunctions -> showRecords('games', null, 'developer', 'games.Developer_ID', 'developer.Developer_ID', "games.Game_ID='$id'");
+    $devs = $moistFunctions -> showRecords('developer');
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -111,41 +119,53 @@
 </head>
 <body style="background-color: #1e1e1e">
     <div class="container">
-        <form action="" method="post">
+        <form action="" method="post" enctype="multipart/form-data">
         <p style="font-size: 25px; margin-top: 16px; margin-bottom: 29px">Edit Game</p>
         
         <label for="name">Game Name</label><br>
-        <input type="text" name="" value="Utot" required><br><br>
+        <input type="text" name="Game_Name" value="<?=$data[0][1] ?>" required><br><br>
         
         <label for="developer">Game Developer</label><br>
-        <select name="" value="" required>
-        <option>na pinasok</option>
-        </select><br><br>
+            <select name="Developer_ID" class="form-select" onmousedown="this.size=5;" onclick="this.size=1" required>
+                <option value="" disabled selected><?=$data[0][9]?></option>
+                    <?php
+                        if (count($devs) > 0) {
+                            foreach ($devs as $dev) {
+                                echo "<option value ='$dev[0]'>$dev[1]</option>";
+                            }
+                        }
+                    ?>
+            </select><br><br>
         
         <label for="price">Game Price</label><br>
-        <input type="float" name="" value="45.00" required><br><br>
+        <input type="float" name="Price" value="<?=$data[0][4]?>" required><br><br>
         
         <label for="genre">Game Genre</label><br>
-        <select name="" required>
-        <option>sa ref</option>
-        </select><br><br>
+            <select name="Category" required>
+                <option value="" disabled selected><?=$data[0][5]?></option>
+                <option value="1">1. Action</option>
+                <option value="2">2. Adventure</option>
+                <option value="3">3. RPG</option>
+                <option value="4">4. Simulation</option>
+                <option value="5">5. Strategy   </option>
+            </select><br><br>
         
         <label for="game_image">Game Image</label>
-        <input type="file" id="inputFile" class="file-upload" name="" placeholder="Upload" accept="image/png, image/jpeg" required><br>
+        <input type="file" id="inputFile" class="file-upload" name="GameImage" placeholder="Upload" accept="image/png, image/jpeg" required><br>
         
         <label for="game_image">Game Background</label>
-        <input type="file" id="inputFile" class="file-upload" name="" placeholder="Upload" accept="image/png, image/jpeg" required><br>
+        <input type="file" id="inputFile" class="file-upload" name="GameBackground" placeholder="Upload" accept="image/png, image/jpeg" required><br>
 
         <label for="game_image">Game Screenshots</label>
-        <input type="file" id="inputFile" class="file-upload" name="" style="margin-bottom: 15px;" placeholder="Upload Screenshot 1" accept="image/png, image/jpeg" required>
-        <input type="file" id="inputFile" class="file-upload" name="" style="margin-bottom: 15px;" placeholder="Upload Screenshot 2" accept="image/png, image/jpeg" required>
-        <input type="file" id="inputFile" class="file-upload" name="" placeholder="Upload Screenshot 3" accept="image/png, image/jpeg" required>
+        <input type="file" id="inputFile" class="file-upload" name="Screenshot1" style="margin-bottom: 15px;" placeholder="Upload Screenshot 1" accept="image/png, image/jpeg" required>
+        <input type="file" id="inputFile" class="file-upload" name="Screenshot2" style="margin-bottom: 15px;" placeholder="Upload Screenshot 2" accept="image/png, image/jpeg" required>
+        <input type="file" id="inputFile" class="file-upload" name="Screenshot3" placeholder="Upload Screenshot 3" accept="image/png, image/jpeg" required>
         <br>
 
         <label for="game_desc">Game Description</label>
-        <textarea name="" rows="4" placeholder="Write description here..." required>TUMIGAS</textarea><br><br>
+        <textarea name="" rows="4" placeholder="Write description here..." required><?=$data[0][2]?></textarea><br><br>
         
-        <input type="submit" class="submit-button"><br>
+        <input type="submit" name="Edit" class="submit-button"><br>
         <a href="" style="margin-top: 10px; color: white; text-decoration: none;">Cancel</a>
     </form>
     </div>

@@ -1,4 +1,9 @@
-<?php include '../css/Admin_css.php'; ?>
+<?php 
+    include '../css/Admin_css.php'; 
+    require '../db/MoistFunctions.php';
+    $moistFunctions = new MoistFunctions($connection);
+
+?>
 <body style="background-color: #1e1e1e;">
   <nav class="navbar">
     <div class="container-fluid">
@@ -45,28 +50,35 @@
   <div class="container game-lib" style="margin-top: -75px;">
   <div style="margin: 0 5% 5% 5%;">
     <table class="game-table">
-      <tr>
-        <td style="padding: 0;">
-            <img class="image-class" src="genshin.png" alt="Game Image">
-        </td>
-        <td>
-          <h3>Game Title&ensp;&ensp;<span class="rating">
-              <span class="star">&#9733;</span>
-              <span class="star">&#9733;</span>
-              <span class="star">&#9733;</span>
-              <span class="star">&#9733;</span>
-              <span class="star">&#9734;</span> <!-- Example rating: 4 out of 5 stars -->
-            </span></h3>
-          <p style="float: left;">Developer Name&ensp;<a href="#">Action</a></p>
-        </td>
-        <td style="padding-right: 0;">
-          <div class="button-group">
-            <button class="delete-button">Delete</button>
-            <br>
-            <button class="edit-button" style="margin-top: 5px;">Edit</button>
-          </div>
-        </td>
-      </tr>
+        <?php
+            $datas = $moistFunctions -> showRecords('games', NULL, 'developer', 'games.Developer_ID', 'developer.Developer_ID');
+            if (count($datas) > 0) {
+                foreach ($datas as $data) {
+                    echo "<tr>";
+                        echo "<td style='padding: 0;'>
+                            <img class='image-class' src='../Games/$data[1]/Image.png' alt='Game Image'>
+                            </td>";
+                        echo "<td>
+                                <h3>$data[1]&ensp;&ensp;<span class='rating'>
+                                    <span class='star'>&#9733;</span>
+                                    <span class='star'>&#9733;</span>
+                                    <span class='star'>&#9733;</span>
+                                    <span class='star'>&#9733;</span>
+                                    <span class='star'>&#9734;</span> <!-- Example rating: 4 out of 5 stars -->
+                                    </span></h3>
+                                <p style='float: left;'>$data[10]&ensp;<a href='#'>$data[5]</a></p>
+                            </td>";
+                        echo "<td style='padding-right: 0;'>
+                                <div class='button-group'>
+                                    <button class='delete-button' id='$data[0]'>Delete</button>
+                                    <br>
+                                    <button class='edit-button' style='margin-top: 5px;' onclick=\"window.location.href='EditGames.php?id=$data[0]';\">Edit</button>
+                                </div>
+                            </td>";
+                    echo "</tr>";
+                }
+            }
+        ?>
     </table>
   </div>
 </div>
