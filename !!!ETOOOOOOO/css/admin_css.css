@@ -182,6 +182,7 @@ a.add-button:hover{
 }
 
 .edit-button {
+    margin-top: 25px;
     background-color: #ffcd4e;
 }
 
