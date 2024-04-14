@@ -8,6 +8,34 @@
     $data = $moistFunctions -> showRecords('games', null, 'developer', 'games.Developer_ID', 'developer.Developer_ID', "games.Game_ID='$id'");
     $devs = $moistFunctions -> showRecords('developer');
 
+    if (isset($_POST['Edit'])){
+        $Gname = $_POST['Game_Name'];
+        $folderPath = "../Games/" .$data[0][1];
+        $new_folderPath = "../Games/$Gname";
+        if (is_dir($folderPath)){
+            if (strcmp($Gname,$data[0][1]) != 0){
+                rename($folderPath, $new_folderPath);
+            }
+
+            foreach ($_POST as $name => $val) {
+                if ($name !== 'Edit' && $name !== 'GameImage' && $name !== 'GameBackground' && $name !== 'Screenshot1' && $name !== 'Screenshot2' && $name !== 'Screenshot3') {
+                    $datas[$name] = $val;
+                }
+            }
+            try {
+                $action = $moistFunctions->updateQuery($datas, 'games', ['Game_ID' => $id]);
+            } catch (Exception $e) {
+                echo "Error: $e";
+                die();
+            } 
+            $target_dir = $new_folderPath. "/";
+            $moistFunctions -> uploadFile($_FILES["GameImage"], $target_dir, $Gname, "Image." . "png");
+            $moistFunctions -> uploadFile($_FILES["GameBackground"], $target_dir, $Gname, "Background." . "png");
+            $moistFunctions -> uploadFile($_FILES["Screenshot1"], $target_dir, $Gname, "Screenshot1." . "png");
+            $moistFunctions -> uploadFile($_FILES["Screenshot2"], $target_dir, $Gname, "Screenshot2." . "png");
+            $moistFunctions -> uploadFile($_FILES["Screenshot3"], $target_dir, $Gname, "Screenshot3." . "png");
+        }
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -151,7 +179,7 @@
             </select><br><br>
         
         <label for="game_image">Game Image</label>
-        <input type="file" id="inputFile" class="file-upload" name="GameImage" placeholder="Upload" accept="image/png, image/jpeg" required><br>
+        <input type="file" id="inputFile" class="file-upload" value="Wala" name="GameImage" placeholder="Upload" accept="image/png, image/jpeg" required><br>
         
         <label for="game_image">Game Background</label>
         <input type="file" id="inputFile" class="file-upload" name="GameBackground" placeholder="Upload" accept="image/png, image/jpeg" required><br>
@@ -163,7 +191,7 @@
         <br>
 
         <label for="game_desc">Game Description</label>
-        <textarea name="" rows="4" placeholder="Write description here..." required><?=$data[0][2]?></textarea><br><br>
+        <textarea name="Game_Desc" rows="4" placeholder="Write description here..." required><?=$data[0][2]?></textarea><br><br>
         
         <input type="submit" name="Edit" class="submit-button"><br>
         <a href="" style="margin-top: 10px; color: white; text-decoration: none;">Cancel</a>

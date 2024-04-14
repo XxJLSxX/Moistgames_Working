@@ -67,6 +67,19 @@ class MoistFunctions {
         return mysqli_query($this->connection, $sql);
     }
 
+    public function updateQuery($data,$tbl,$id){
+        $update="";
+        foreach($data as $key => $value){
+            $update.=" $key='$value' ,";
+        }
+        $update = substr($update,0,-1);
+        $primary_key = array_keys($id)[0];
+        $key_value = $id[$primary_key];
+        $sql = "UPDATE $tbl SET {$update} WHERE $primary_key=$key_value";
+        return mysqli_query($this-> connection, $sql);
+    }
+    
+
     public function uploadFile($file, $target_dir, $Gname, $new_file_name) {
         $fileExtension = pathinfo($file["name"], PATHINFO_EXTENSION);
         $uploadOk = 1;
