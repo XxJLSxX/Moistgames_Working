@@ -1,6 +1,15 @@
 #GameAdd-Form .modal-lg {
     width: 550px;
 }
+
+#EditGame-Form .modal-lg {
+    width: 550px;
+}
+
+#AddGame-Form .modal-lg {
+    width: 550px;
+}
+
 .modal-body{
     text-align: center; 
     background-color: #6d6c6c;
