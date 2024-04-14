@@ -1,0 +1,80 @@
+#GameAdd-Form .modal-lg {
+    width: 550px;
+}
+.modal-body{
+    text-align: center; 
+    background-color: #6d6c6c;
+    border-radius: 25px;
+    padding: 2%;
+    width: 500px;
+    margin: 40px;
+    margin-left: auto; 
+    margin-right: auto;
+}
+.modal-body p{
+    font-weight: bold;
+    color: white;
+    font-size: 20px;
+}
+.modal-body select{
+    border-radius: 16.5px;
+    width: 420px;
+    padding: 7.5px;
+    background-color: #dddddd;
+}
+.modal-body label{
+    margin-left: 16.5px;
+    color: white;
+    font-size: 15px;
+    font-weight: lighter;
+    float: left; /* Align text to the left */
+}
+.modal-body input{
+    border-radius: 16.5px;
+    width: 420px;
+    padding: 7.5px;
+}
+.modal-body textarea {
+    border-radius: 7.5px;
+    padding: 8.5px;
+    width: 420px; /* Adjust the width as needed */
+    height: 150px; /* Adjust the height as needed */
+    margin-bottom: 20px;
+}
+.modal-body .submit-button {
+    font-weight: bold;
+    background-color: #ababab;
+    border: none;
+    border-radius: 25px;
+    color: black;
+    font-size: 16px;
+    padding: 10px 20px;
+    text-decoration: none;
+    width: 170px; /* Adjusted width */
+    display: block;
+    margin-top: 7.5px;
+    margin-left: auto; /* Aligns the button to the right */
+    margin-right: auto;
+}
+.modal-body.file-upload{
+    display: none;
+    margin-left: 8px;
+    border-radius: 16.5px;
+    width: 420px;
+    padding: 7.5px;
+    outline: none;
+    font-size: 16px;
+    cursor: pointer;
+}   
+
+.modal-body #inputFile::-webkit-file-upload-button {
+    visibility: hidden;
+}
+.modal-body input[type='file'] {
+    background-color: white;
+    border: 1px solid #ccc;
+    text-align: center;
+    overflow: hidden;
+}
+
+/* ------------------------------------ Modals ------------------------------------ */

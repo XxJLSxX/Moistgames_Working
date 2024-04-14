@@ -1,0 +1,220 @@
+body{
+    font-family: sans-serif;
+    margin: 0;
+}
+
+#section {
+    background-color: #101010;
+    height: 100vh;
+    width: 100%;
+    max-height: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.game-library-container {
+    margin-top: 8vh;
+    width: 85vw;
+    height: 85vh;
+    max-width: 85%;
+    max-height: 85%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 16/9;
+    padding: 0;
+}
+
+.library-header {
+    width: 100%;
+    height: 10%;
+    display: flex;
+}
+
+.library-title {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+
+}
+
+.library-title p {
+    font-size: 35px;
+    color: #ffffff;
+}
+
+.game-sort-options {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0;
+}
+
+.sort-controls {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.sort-controls a {
+    text-decoration: none;
+    color: white;
+    background-color: #999999;
+    padding: 6px 20px 6px 20px;
+    border-radius: 15px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    font-size: 0.9vw;
+    font-weight: bolder;
+}
+
+.sort-controls a:hover {
+    background-color: rgb(86, 86, 86);
+}
+
+.sort-controls p {
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 1.3vw;
+}
+
+.sort-controls form {
+    margin-bottom: 2px;
+}
+
+.sort-controls form select {
+    font-size: 15px;
+    font-weight: bolder;
+    border: none;
+    background-color: #999999;
+    color: #ffffff;
+    padding: 4px 10px 4px 10px;
+    border-radius: 15px;
+}
+
+.game-records {
+    width: 100%;
+    height: 85%;
+    display: flex;
+    flex-direction: column;
+    gap: 1%;
+}
+
+.game-entry {
+    width: 100%;
+    height: 19%;
+    background-color: #3B3B3B;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    display: flex;
+    position: relative;
+    transition: transform 0.3s;
+}
+
+.game-entry:hover {
+    transform: scale(102%);
+}
+
+.game-image-container {
+    height: auto;
+    width: 15%;
+}
+
+.game-image-container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 15.09%;
+    z-index: 2;
+}
+
+.game-image-container::after {
+    left: 0;
+    background: linear-gradient(to left, #3B3B3B, transparent);
+}
+
+.game-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.game-details-container {
+    width: 85%;
+    height: 100%;
+    color: #ffffff;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.game-title-section {
+    display: flex;
+    align-items: center;
+    height: 50%;
+    width: 100%;
+    padding-left: 2%;
+}
+
+.game-title-section .game-title {
+    width: 100%;
+    font-size: 22px;
+    color: #ffffff;
+    overflow: hidden;
+}
+
+.game-info-section {
+    width: 98%;
+    height: 55%;
+    display: flex;
+    padding-left: 2%;
+}
+
+.game-info-section  .game-developer {
+    font-size: 15px;
+    margin: 0;
+    margin-top: 3.5px;
+}
+
+.game-info-section  .game-genre {
+    background-color: #5D5D5D;
+    color: white;
+    font-weight: bold;
+    font-size: 12px;
+    padding: 5px 10px 5px 10px;
+    border-radius: 15px;
+    margin: 0;
+    margin-bottom: auto;
+    margin-left: 25px;
+}
+
+.pagination-links {
+    height: 5%;
+    width: 100%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.pagination-button {
+    text-decoration: none;
+    color: white;
+}
+
+.pagination-button:active {
+    color: #ffeb54;
+}
+
+.page-highlight {
+    text-decoration: none;
+    color: #ffeb54;
+    font-weight: bolder;
+}
