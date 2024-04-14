@@ -156,17 +156,18 @@ body{
 
 .game-title-section {
     display: flex;
-    align-items: center;
+    align-items: left;
     height: 50%;
-    width: 100%;
+    width: 98%;
     padding-left: 2%;
 }
 
 .game-title-section .game-title {
-    width: 100%;
+    width: 60%;
     font-size: 22px;
     color: #ffffff;
     overflow: hidden;
+    text-align: left;
 }
 
 .game-info-section {
@@ -217,4 +218,20 @@ body{
     text-decoration: none;
     color: #ffeb54;
     font-weight: bolder;
+}
+
+.library-add-button {
+    text-decoration: none;
+    color: white;
+    background-color: #1cca0d;
+    padding: 6px 20px 6px 20px;
+    border-radius: 15px;
+    margin-left: 15px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    font-size: 0.9vw;
+    font-weight: bolder;
+}
+
+.library-add-button:hover {
+    background-color: rgb(25, 150, 4);
 }
