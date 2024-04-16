@@ -1,0 +1,523 @@
+/*-----------------------------------------Navigation CSS--------------------------------------------------*/
+.nav{
+    background-color: #3B3B3B;
+    width: 100%;
+    height: 55px;
+    top: 0;
+    left: 0;
+    position: fixed;
+    color: white;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 1);
+}
+
+.nav-logout {
+    width: 66svw;
+    justify-content: right;
+}
+
+.nav img{
+    width: 60px;
+    margin-right: 10px;
+}
+
+.nav-title{
+    text-decoration: none;
+    color: white;
+    margin-right: 30px;
+    font-size: 20px;
+}
+
+.nav-title:hover{
+    color: rgb(218, 218, 218);
+}
+
+.search-btn{
+    background-color: white;
+    border-radius: 1rem;
+    width: 33px;
+    border: none;
+    margin: 0;
+    padding:  6px 6px 5px 6px;
+    cursor: pointer;
+    margin-left: auto;
+    margin-right: 20px;
+}
+
+.search-btn.hide-search-btn {
+    display: none;
+    width: 0;
+    padding: 0;
+    margin: 0;
+}
+
+
+.search-btn img{
+    width: 20px;
+}
+
+.access{
+    margin-left: 15px;
+}
+
+.access-btn{
+    background-color: #DDDDDD;
+    color: black;
+    border: none;
+    padding:8px;
+    margin-right: 20px;
+    border-radius: 15px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.access-btn:hover{
+    background-color: #b9b9b9;
+}
+
+.profile-user{
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: white;
+    margin-right: 20px;
+}
+
+.user-logout{
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    margin-right: 20px;
+}
+
+.user-logout-admin {
+    display: flex;
+    text-decoration: none;
+    margin-right: 10px;
+}
+
+.user-logout-admin img {
+    aspect-ratio: 1 / 1;
+    width: 35px;
+    margin-left: auto;
+}
+
+.user-logout img {
+    aspect-ratio: 1 / 1;
+    width: 35px;
+    margin-right: 2px;
+}
+
+.profile-user img{    
+    aspect-ratio: 1 / 1;
+    width: 40px;
+    margin-right: 2px;
+}
+
+.profile-user:hover{
+    color: rgb(218, 218, 218);
+}
+
+
+/*-----------------------------------------Search Popup CSS--------------------------------------------------*/
+
+.search-popup{
+    margin-left: auto;
+    margin-right: 20px;
+    top: 12px;
+    right: 162px;
+    width: 0; 
+    overflow: hidden;
+    transition: width 0.3s, border-radius 0.3s; 
+    border-radius: 15px; 
+    display: none;
+}
+
+.open-search-popup {
+    width: 180px; 
+    border-radius: 15px; 
+}
+
+.search-popup input{
+    padding: 8px 5px 8px 20px;
+    border-radius: 15px;
+    border: none;
+    outline: none;
+}
+
+.search-result{
+    width: 22%;
+    height: fit-content;
+    overflow: hidden;
+    position: fixed;
+    top: 60px;
+    margin-left: 77.5%;
+    margin-right: 0.5%;
+    background-color: #3B3B3B;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    object-fit: cover;
+}
+
+.search-result a{
+    text-decoration: none;
+}
+
+.search-container{
+    width: 100%;
+    height: 50px;
+    background-color: #3B3B3B;
+    display: flex;
+    color: rgb(255, 255, 255);
+}
+
+.search-container:hover{
+    background-color: #696969;
+}
+
+.search-img-con{
+    width: 25%;
+    height: auto;
+}
+
+.search-img-con img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.search-desc{
+    display: flex;
+    flex-direction: column;
+    padding-left: 2%;
+    justify-content: center;
+    width: 75%;
+    height: 100%;
+}
+
+.search-desc p{
+    font-size: 0.8vw;
+    margin: 0;
+}
+
+.search-desc h5{
+    overflow: hidden;
+    font-size: 0.9vw;
+    margin: 0;
+}
+
+/*-----------------------------------------Popup CSS---------------------------------------------------*/
+.container{
+    text-align: center; 
+    background-color: #5d5d5d;
+    border-radius: 25px;
+    padding: 2%;
+    width: 500px;
+    margin: 125px;
+    margin-left: auto; 
+    margin-right: auto;
+}
+
+.modal-body {
+    background-color: #5d5d5d;
+    border-radius: 10px;
+}
+
+.modal-body #signin{
+    font-size: 40px;
+    font-weight: bold; 
+    margin-top: 16px; 
+    margin-bottom: 29px
+}
+
+.modal-content {
+    background-color: #5d5d5d;
+    border-radius: 10px;
+}
+
+/* Modal End */
+
+label{
+    margin-left: 16.5px;
+    color: white;
+    font-size: 15px;
+    font-weight: lighter;
+    float: left; /* Align text to the left */
+}
+input{
+    border-radius: 16.5px;
+    width: 420px;
+    padding: 7.5px;
+}
+
+/* Added CSS for flex container and buttons */
+.flex-container {
+    display: block;
+    margin-top: 20px;
+}
+
+.flex-container p {
+    font-weight: bold;
+    padding: 0;
+    margin: 0;
+}
+
+.flex-container button {
+    margin: 5px;
+}
+
+.login-button, .signup-button {
+    font-weight: bold;
+    border-radius: 25px;
+    padding: 7.9px 20px;
+    font-size: 16px;
+    text-decoration: none;
+    color: white;
+    margin-left: 16.5px;
+    margin-right: 16.5px;
+}
+
+.login-button {
+    width: 160px; /* Adjusted width for Login button */
+}
+
+.signup-button {
+    background-color: #ff9653;
+    width: 160px; /* Adjusted width for Sign Up button */
+    text-decoration: none;
+}
+.signup-button:hover {
+    background-color: #ff7c00; /* Slightly darker shade of button color */
+    color: white;
+    text-decoration: none; /* Remove underline */
+}
+/*-----------------------------------------Receipt Popup CSS--------------------------------------------------*/
+.receipt-container {
+    display: flex;
+    justify-content: center; /* Center the items horizontally */
+}
+.receipt-details {
+    width: 100%; /* Adjusted width for receipt details */
+    padding: 40px;
+    border: 2px solid #333; /* Dark border color */
+    border-radius: 5px;
+    background-color: #222; /* Dark background color */
+    color: #fff; 
+}
+
+.details p {
+    margin: 5px 0;
+}
+
+hr {
+    margin: 20px 0;
+}
+
+.purchase-id {
+    text-align: right;
+}
+
+.details p {
+    margin: 10px 0;
+}
+
+.total-price {
+    margin-bottom: 20px;
+}
+
+.purchase-id {
+    margin-top: 20px; 
+    margin-bottom: 20px;
+}
+
+.details p:nth-child(5) {
+    margin-bottom: 20%; 
+}
+
+.receipt-heading {
+    text-align: center;
+    margin-bottom: 30px;
+    /* color: Red; */
+}  
+/*-----------------------------------------Buy Popup CSS--------------------------------------------------*/
+.buy-container {
+    display: flex;
+    justify-content: center; /* Center the items horizontally */
+    gap: 5px; /* Adjust the gap between the two containers */
+}
+
+.game-details {
+    width: 500px; /* Adjusted width for game details */
+    padding: 15px;
+    border: 2px solid #333; /* Dark border color */
+    border-radius: 5px;
+    box-sizing: border-box;
+    background-color: #222; /* Dark background color */
+    color: #fff; /* White text color */
+    align-items: center;
+    display: flex;
+    flex-direction: column; 
+    margin-right: 0px;
+}
+
+.action-abtn {
+    margin-top: 5px; /* Adjust margin-top */
+    margin-bottom: 15px; /* Adjust margin-bottom */
+    display: inline-block; /* Make button inline with text */
+}
+
+.game-image {
+    aspect-ratio: 5 / 3;
+    width: 100%; /* Adjusted width for the image */
+    object-fit: cover;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.abtn{
+    padding: 3px;
+    color: #fff;
+    border: none;
+    border-radius: 15px;
+    display: block; /* Make button occupy full width */
+    margin-top: 5px; /* Adjust margin-top */
+    margin-bottom: 15px; /* Adjust margin-bottom */
+}
+
+.action-abtn {
+    background-color: #636363; /* Darker blue */
+    color: white;
+    width: 70px;
+    margin-bottom: 20px;
+}
+
+.view-details {
+    color: white;
+    width: 120px; /* Adjust the width as needed */
+}
+
+.receipt-details {
+    width: 55%; /* Adjusted width for receipt details */
+    padding: 20px;
+    border: 2px solid #333; /* Dark border color */
+    border-radius: 5px;
+    box-sizing: border-box;
+    background-color: #222; /* Dark background color */
+    color: #fff; /* White text color */
+}
+
+.details p {
+    margin: 5px 0;
+}
+
+.buy-purchase-id {
+    display: flex;
+    justify-content: center;
+
+}
+
+.buy-purchase-id button {
+    padding: 10px;
+    background-color: #4CAF50; /* Green */
+    color: #fff;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: block; /* Make button occupy full width */
+    margin-top: 5px; /* Adjust margin-top */
+    margin-bottom: 15px; /* Adjust margin-bottom */
+    text-align: center;
+    width: 120px; /* Adjust the width as needed */
+}
+
+.buy-purchase-id button:hover {
+    background-color: #45a049;
+}
+
+.details {
+    margin-bottom: 25%;
+}
+
+.details p {
+    display: flex; /* Use flexbox */
+    align-items: center; /* Align items vertically */
+}
+
+.details strong {
+    margin-right: 10px; /* Add some spacing between the elements */
+}
+
+.buy-total-price {
+    margin-bottom: 45px; /* Add margin to the .total-price container */
+}
+
+.details p:nth-child(3) {
+    margin-bottom: 20%; /* Add margin-bottom to the fifth paragraph within the .details container (payment time) */
+}
+.receipt-heading {
+    text-align: center;
+}
+
+.game-details h3,
+.game-details p,
+.game-details button {
+    text-align: center;
+    margin: 2px; /* Remove default margin */
+    color: white;
+}
+.game-details button {
+    margin-top: 20px;
+    padding: 2px;
+    background-color: grey;
+    border-radius: 15px;
+}
+
+/* ------------------------------------------------------------ Completion Popup ------------------------------------------------------------ */
+.Completion {
+    justify-content: center;    
+    align-items: center;
+    text-align: center;
+}
+
+.Completion h3 {
+    text-align: center;
+    font-size: 30px;
+    margin-bottom: 10px;
+    color: white;
+}
+
+.Completion p {
+    text-align: center;
+    color: white;
+    font-size: 16px;
+    margin-bottom: 50px;
+}
+
+.Completion button {
+    text-align: center;
+    padding: 10px 20px;
+    background-color: #999999; /* Blue background color */
+    color: #fff;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.Completion hr {
+    color: white;
+    border: 1px solid white;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+.Completion button:hover {
+    background-color: #5D5D5D; /* Darker blue on hover */
+}
