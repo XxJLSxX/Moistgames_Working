@@ -1,5 +1,5 @@
 <?php
-    require '../db/MoistFunctions.php';
+    require '../Database/MoistFunctions.php';
     $moistFunctions = new MoistFunctions($connection);
     $id = $_GET['id'] ?? NULL;
 
@@ -29,11 +29,11 @@
                 die();
             } 
             $target_dir = $new_folderPath. "/";
-            $moistFunctions -> uploadFile($_FILES["GameImage"], $target_dir, $Gname, "Image." . "png");
-            $moistFunctions -> uploadFile($_FILES["GameBackground"], $target_dir, $Gname, "Background." . "png");
-            $moistFunctions -> uploadFile($_FILES["Screenshot1"], $target_dir, $Gname, "Screenshot1." . "png");
-            $moistFunctions -> uploadFile($_FILES["Screenshot2"], $target_dir, $Gname, "Screenshot2." . "png");
-            $moistFunctions -> uploadFile($_FILES["Screenshot3"], $target_dir, $Gname, "Screenshot3." . "png");
+            $moistFunctions -> uploadFile($_FILES["GameImage"], $target_dir, "Image." . "png");
+            $moistFunctions -> uploadFile($_FILES["GameBackground"], $target_dir, "Background." . "png");
+            $moistFunctions -> uploadFile($_FILES["Screenshot1"], $target_dir, "Screenshot1." . "png");
+            $moistFunctions -> uploadFile($_FILES["Screenshot2"], $target_dir, "Screenshot2." . "png");
+            $moistFunctions -> uploadFile($_FILES["Screenshot3"], $target_dir, "Screenshot3." . "png");
         }
     }
 ?>
@@ -179,15 +179,15 @@
             </select><br><br>
         
         <label for="game_image">Game Image</label>
-        <input type="file" id="inputFile" class="file-upload" value="Wala" name="GameImage" placeholder="Upload" accept="image/png, image/jpeg" required><br>
+        <input type="file" id="inputFile" class="file-upload" value="Wala" name="GameImage" placeholder="Upload" accept="image/png, image/jpeg"><br>
         
         <label for="game_image">Game Background</label>
-        <input type="file" id="inputFile" class="file-upload" name="GameBackground" placeholder="Upload" accept="image/png, image/jpeg" required><br>
+        <input type="file" id="inputFile" class="file-upload" name="GameBackground" placeholder="Upload" accept="image/png, image/jpeg"><br>
 
         <label for="game_image">Game Screenshots</label>
-        <input type="file" id="inputFile" class="file-upload" name="Screenshot1" style="margin-bottom: 15px;" placeholder="Upload Screenshot 1" accept="image/png, image/jpeg" required>
-        <input type="file" id="inputFile" class="file-upload" name="Screenshot2" style="margin-bottom: 15px;" placeholder="Upload Screenshot 2" accept="image/png, image/jpeg" required>
-        <input type="file" id="inputFile" class="file-upload" name="Screenshot3" placeholder="Upload Screenshot 3" accept="image/png, image/jpeg" required>
+        <input type="file" id="inputFile" class="file-upload" name="Screenshot1" style="margin-bottom: 15px;" placeholder="Upload Screenshot 1" accept="image/png, image/jpeg">
+        <input type="file" id="inputFile" class="file-upload" name="Screenshot2" style="margin-bottom: 15px;" placeholder="Upload Screenshot 2" accept="image/png, image/jpeg">
+        <input type="file" id="inputFile" class="file-upload" name="Screenshot3" placeholder="Upload Screenshot 3" accept="image/png, image/jpeg">
         <br>
 
         <label for="game_desc">Game Description</label>

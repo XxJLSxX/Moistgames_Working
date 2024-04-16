@@ -1,15 +1,20 @@
 <?php
     require '../Database/MoistFunctions.php';
     $moistFunctions = new MoistFunctions($connection);
+    $id =$_GET["id"] ?? NULL;
     
+    if($id==NULL)
+        header("Location: ../Admin/");
+
     $devs = $moistFunctions -> showRecords('developer');
-    if (isset($_POST['Add'])){
-        $data = [];
+    $data = $moistFunctions -> showRecords('developer', "Developer_ID = $id");
+    if (isset($_POST['Edit'])){
+        $datas = [];
         $nodup = 1;
         $dname= $_POST['Developer_Name'];
         foreach ($_POST as $name => $val) {
-            if ($name !== 'Add' && $name !== 'DeveloperImage') {
-                $data[$name] = $val;
+            if ($name !== 'Edit' && $name !== 'DeveloperImage') {
+                $datas[$name] = $val;
             }
         }
         
@@ -21,12 +26,14 @@
         
         if ($nodup == 1){
             try {
-                $action = $moistFunctions->addQuery($data, 'developer');
+                $action = $moistFunctions->updateQuery($datas, 'developer', ['Developer_ID' => $id]);
                     //Create Folder
-                $folderPath = "../Developer/$dname";
-                if (!is_dir($folderPath)) {
-                    //Create if existing
-                    mkdir($folderPath,0777);
+                $new_folderPath = "../Developer/$dname";
+                $folderPath = "../Developer/".$data[0][1];
+                if (is_dir($folderPath)) {
+                    if (strcmp($dname,$data[0][1]) != 0){
+                        rename($folderPath, $new_folderPath);
+                    }
                 }else {
                     echo"Developer Already Exists";
                     die();
@@ -112,18 +119,18 @@
 <body style="background-color: #1e1e1e">
     <div class="container">
         <form action="" method="post" enctype="multipart/form-data">
-            <p style="font-size: 25px; margin-top: 16px; margin-bottom: 29px">Add Developer<br><img src="images/default-icon.png" style="margin-top: 14px; width: 150px; height: 150px;"></p>
+            <p style="font-size: 25px; margin-top: 16px; margin-bottom: 29px">Edit Developer<br><img src="images/default-icon.png" style="margin-top: 14px; width: 150px; height: 150px;"></p>
             <label for="name">Developer Name</label><br>
-            <input type="text" name="Developer_Name" required><br><br>
+            <input type="text" value="<?=$data[0][1]?>" name="Developer_Name" required><br><br>
             <label for="developer_image">Developer Image</label>
             <input type="file" id="inputFile" class="file-upload" name="DeveloperImage" placeholder="Upload" accept="image/png, image/jpeg" required><br>
             <label for="email">Email</label><br>
-            <input type="email" name="Developer_Email" required><br><br>
+            <input type="email" value="<?=$data[0][2]?>" name="Developer_Email" required><br><br>
             <label for="address">Address</label><br>
-            <input type="text" name="Developer_Address" required><br><br>
+            <input type="text" value="<?=$data[0][3]?>" name="Developer_Address" required><br><br>
             <label for="about_desc">About Description:</label><br>
-            <textarea name="Developer_Desc" rows="4" required></textarea><br><br>
-            <input type="submit" name="Add" class="submit-button"><br>
+            <textarea name="Developer_Desc" value="" rows="4" required><?=$data[0][4]?></textarea><br><br>
+            <input type="submit" name="Edit" class="submit-button"><br>
             <a href="" style="margin-top: 10px; color: white;">Cancel</a>
         </form>
     </div>

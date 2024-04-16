@@ -1,5 +1,5 @@
 <?php
-    require '../db/MoistFunctions.php';
+    require '../Database/MoistFunctions.php';
     $moistFunctions = new MoistFunctions($connection);
 
     $devs = $moistFunctions -> showRecords('developer');
@@ -35,11 +35,11 @@
         
         //Save and Rename image for GameImage
         $target_dir = "../Games/$Gname/";
-        $moistFunctions -> uploadFile($_FILES["GameImage"], $target_dir, $Gname, "Image." . "png");
-        $moistFunctions -> uploadFile($_FILES["GameBackground"], $target_dir, $Gname, "Background." . "png");
-        $moistFunctions -> uploadFile($_FILES["Screenshot1"], $target_dir, $Gname, "Screenshot1." . "png");
-        $moistFunctions -> uploadFile($_FILES["Screenshot2"], $target_dir, $Gname, "Screenshot2." . "png");
-        $moistFunctions -> uploadFile($_FILES["Screenshot3"], $target_dir, $Gname, "Screenshot3." . "png");
+        $moistFunctions -> uploadFile($_FILES["GameImage"], $target_dir, "Image." . "png");
+        $moistFunctions -> uploadFile($_FILES["GameBackground"], $target_dir,  "Background." . "png");
+        $moistFunctions -> uploadFile($_FILES["Screenshot1"], $target_dir,  "Screenshot1." . "png");
+        $moistFunctions -> uploadFile($_FILES["Screenshot2"], $target_dir, "Screenshot2." . "png");
+        $moistFunctions -> uploadFile($_FILES["Screenshot3"], $target_dir,  "Screenshot3." . "png");
 
 
     }
