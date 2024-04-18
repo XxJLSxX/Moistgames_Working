@@ -61,8 +61,9 @@ if (isset($_POST['Add'])) {
 
 
 if (isset($_POST['Edit'])) {
-    
-    if ($id == NULL) header("Location: ../Admin/Admin_GameLibrary.php");
+    $id = $_POST['u_id'];
+    $data = $moistFunctions->showRecords('games', null, 'developer', 'games.Developer_ID', 'developer.Developer_ID', "games.Game_ID='$id'");
+    $devs = $moistFunctions -> showRecords('developer');
     $Gname = $_POST['Game_Name'];
     $folderPath = "../Games/" . $data[0][1];
     $new_folderPath = "../Games/$Gname";
@@ -70,14 +71,15 @@ if (isset($_POST['Edit'])) {
         if (strcmp($Gname, $data[0][1]) != 0) {
             rename($folderPath, $new_folderPath);
         }
-
+        
         foreach ($_POST as $name => $val) {
-            if ($name !== 'Edit' && $name !== 'GameImage' && $name !== 'GameBackground' && $name !== 'Screenshot1' && $name !== 'Screenshot2' && $name !== 'Screenshot3') {
+            if ($name !== 'Edit' && $name !== 'GameImage' && $name !== 'GameBackground' && $name !== 'Screenshot1' && $name !== 'Screenshot2' && $name !== 'Screenshot3' && $name !== 'u_id') {
                 $datas[$name] = $val;
             }
         }
         try {
             $action = $moistFunctions->updateQuery($datas, 'games', ['Game_ID' => $id]);
+            
         } catch (Exception $e) {
             echo "Error: $e";
             die();
@@ -89,6 +91,7 @@ if (isset($_POST['Edit'])) {
         $moistFunctions->uploadFile($_FILES["Screenshot2"], $target_dir,  "Screenshot2." . "png");
         $moistFunctions->uploadFile($_FILES["Screenshot3"], $target_dir,  "Screenshot3." . "png");
     }
+    header("Refresh:0");
 }
 
 ?>
@@ -113,76 +116,7 @@ if (isset($_POST['Edit'])) {
     <!------------------------------------------------------------ Edit Game Popup ------------------------------------------------------------>
     <div class="edit-popups" id="editpop">
         <div class="edit-form-container" id="editpopcon">
-            <a href="index.php" class="edit-logo">
-                <img src="../img/logo.png">
-            </a>
-            <?php
-                $id = $_GET['id'] ?? NULL;
-                $data = $moistFunctions->showRecords('games', null, 'developer', 'games.Developer_ID', 'developer.Developer_ID', "games.Game_ID='$id'");
-            ?>
-            <p class="edit-title">Edit Game <?php if ($id == NULL) echo "Tangina mo!";?></p>
-            <form action="" method="post" enctype="multipart/form-data">
-                <label class="edit-form-label" for="name">Game Name</label><br>
-                <input class="edit-form-input" type="text" name="Game_Name" value="<?= $data[0][1] ?>" required>
-
-                <label class="edit-form-label" for="developer">Game Developer</label><br>
-                <select class="edit-form-select" name="Developer_ID" id="edit-select" onmousedown="this.size=5;" onclick="this.size=1" required>
-                    <option value="">Tae</option>
-                    <option value="">Tae</option>
-                    <option value="">Tae</option>
-                    <option value="">Tae</option>
-                    <option value="">Tae</option>
-                    <option value="">Tae</option>
-                    <option value="">Tae</option>
-                    <option value="">Tae</option>
-                    <!-- <option value="" disabled selected><?= $data[0][9] ?></option> -->
-                    <!-- <?php
-                    // if (count($devs) > 0) {
-                    //     foreach ($devs as $dev) {
-                    //         echo "<option value ='$dev[0]'>$dev[1]</option>";
-                    //     }
-                    // }
-                    ?> -->
-                </select>
-
-                <label class="edit-form-label" for="price">Game Price</label>
-                <input class="edit-form-input" type="float" name="Price" value="<?= $data[0][4] ?>" required>
-
-                <label class="edit-form-label" for="genre">Game Genre</label><br>
-                <select class="edit-form-select" name="Category"  onmousedown="this.size=5;" onclick="this.size=1" required>
-                    <!-- <option value="" disabled selected><?= $data[0][5] ?></option> -->
-                    <option value="1"> Action</option>
-                    <option value="2"> Adventure</option>
-                    <option value="3"> RPG</option>
-                    <option value="4"> Simulation</option>
-                    <option value="5"> Strategy </option>
-                </select>
-
-                <label class="edit-form-label" for="game_image">Game Image</label>
-                <label class="edit-form-label-upload" for="inputFile">Upload Image Here</label>
-                <input type="file" id="inputFile" class="file-upload" value="Wala" name="GameImage" placeholder="Upload" accept="image/png, image/jpeg" required>
-
-                <label class="edit-form-label" for="game_image">Game Background</label>
-                <label class="edit-form-label-upload" for="inputFile2">Upload Image Here</label>
-                <input type="file" id="inputFile2" class="file-upload" name="GameBackground" placeholder="Upload" accept="image/png, image/jpeg" required>
-
-                <label class="edit-form-label" for="game_image">Game Screenshots</label>
-                <label class="edit-form-label-upload" for="inputFile3">Upload Image Here</label>
-                <input type="file" id="inputFile3" class="file-upload" name="Screenshot1" style="margin-bottom: 15px;" placeholder="Upload Screenshot 1" accept="image/png, image/jpeg" required>
-                
-                <label class="edit-form-label-upload" for="inputFile4">Upload Image Here</label>
-                <input type="file" id="inputFile4" class="file-upload" name="Screenshot2" style="margin-bottom: 15px;" placeholder="Upload Screenshot 2" accept="image/png, image/jpeg" required>
-                
-                <label class="edit-form-label-upload" for="inputFile5">Upload Image Here</label>
-                <input type="file" id="inputFile5" class="file-upload" name="Screenshot3" placeholder="Upload Screenshot 3" accept="image/png, image/jpeg" required>
-                <br>
-
-                <label class="edit-form-label" for="game_desc">Game Description</label>
-                <textarea class="edit-form-textarea" name="Game_Desc" rows="4" placeholder="Write description here..." required><?= $data[0][2] ?></textarea><br><br>
-
-                <input class="edit-form-submit" type="submit" name="Edit" ><br>
-            </form>
-                <button onclick="removepopupEdit()" class="edit-cancel">Cancel</button>
+            <!-------------------------------------- Wag niyo burahin yung dalawang div mga gago kayo ---------------------------------------->
         </div>
     </div>
     <!------------------------------------------------------------ Add Game Popup ------------------------------------------------------------>
@@ -302,32 +236,36 @@ if (isset($_POST['Edit'])) {
                                     }
                                     ?>
                                 </div>
-                                <button class='edit-button' onclick="popupEdit('<?php echo $row['Game_ID'] ?>')" style='margin-top: 5px;' data-bs-toggle="modal" data-bs-target="#EditGame-Form">Edit</button>
+                                <button class='edit-button' style='margin-top: 5px;' id="edit-tite" onclick="popupEdit(<?= $row['Game_ID'];?>)" >Edit</button>
                                 <script>
                                     let editpop = document.getElementById("editpop");
                                     let editpopcon = document.getElementById("editpopcon");
 
                                     function popupEdit(value){
-                                        console.log("Value passed to popupEdit:", value);
-                                        let xhr = new XMLHttpRequest();
-                                        xhr.open("GET", "?id=" + encodeURIComponent(value), true);
-                                        xhr.onreadystatechange = function() {
-                                            if (xhr.readyState === 4 && xhr.status === 200) {
-                                                console.log("Response from server:", xhr.responseText);
-                                               
+                                        var tite = value;
+                                        function sendToPHP(value) {
+                                        var xhttp = new XMLHttpRequest();
+                                        xhttp.onreadystatechange = function() {
+                                            if (this.readyState == 4 && this.status == 200) {
+                                                console.log("Value sent to PHP successfully");
+                                                editpop.classList.add("show-edit");
+                                                editpopcon.classList.add("show-edit-container");
+                                                editpopcon.scrollTop = 0;
+                                                document.body.style.overflow = 'hidden';
+                                                document.documentElement.style.overflow = 'hidden';
+                                                document.getElementById("editpopcon").innerHTML = this.responseText;
                                             }
                                         };
-                                        xhr.send();
-                                        
-                                        editpop.classList.add("show-edit");
-                                        editpopcon.classList.add("show-edit-container");
-                                        editpopcon.scrollTop = 0;
-                                        document.body.style.overflow = 'hidden';
-                                        document.documentElement.style.overflow = 'hidden';
+                                        xhttp.open("GET", "store_variable.php?tite=" + value, true);
+                                        xhttp.send();
+                                        }                 
+                                        sendToPHP(tite);
                                     }
                                     function removepopupEdit(){
-                                        editpop.classList.remove("show-edit");
-                                        editpopcon.classList.remove("show-edit-container");
+                                        editpop.style.visibility = 'visible';
+                                        editpopcon.style.visibility = 'visible';
+                                        //editpop.classList.remove("show-edit");
+                                       //editpopcon.classList.remove("show-edit-container");
                                         document.body.style.overflow = 'auto';
                                         document.documentElement.style.overflow = 'auto';
                                     }
