@@ -67,7 +67,7 @@ echo "
                 <input type='hidden' value = $data[0] name = 'u_id'>
                 <input class='edit-form-submit' type='submit' name='Edit'><br>
             </form>
-                <button onclick='removepopupEdit()' class='edit-cancel'>Cancel</button>";
+                <button onclick=' window.location.reload()' class='edit-cancel'>Cancel</button>";
 }
 // You can perform other operations with $phpVariable here
 ?>

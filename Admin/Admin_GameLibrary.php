@@ -100,8 +100,8 @@ if (isset($_POST['Edit'])) {
 
 <head>
     <link rel="stylesheet" href="../css/index_css.css?+1">
-    <link rel="stylesheet" href="../css/admin_css.css?+2">
-    <link rel="stylesheet" href="../css/admin_addgames_css.css?+2">
+    <link rel="stylesheet" href="../css/admin_css.css?+3">
+    <link rel="stylesheet" href="../css/admin_addgames_css.css?+3">
     <link rel="stylesheet" href="../css/header_css.css?+2">
     <link rel="stylesheet" href="../css/footer_css-forall.css?+1">
     <link rel="stylesheet" href="../css/user_library_css.css?+2">
@@ -210,6 +210,19 @@ if (isset($_POST['Edit'])) {
                     <a class="library-add-button" href="#" data-bs-target="#AddGame-Form" data-bs-toggle="modal">Add Game</a>
                 </div>
             </div>
+<!------------------------------- Confirmation ng Delete ------------------------------------>
+            <div class="popup-area" id="admin-delete-popUp">
+                <div class="popup-con" id="admin-delete-pup">
+                    <div class="popup-title">
+                        <p>Are sure to delete this Review?</p>
+                    </div>
+                    <div class="popup-links">
+                        <button class="cancel-delete" onclick="removeDeletePop()">Cancel</button>
+                        <butto id="admin-continue-del" name="continue-delete" type="submit" class="continue-delete">Continue</button>
+                    </div>
+                </div>
+            </div>
+<!------------------------------------ ------------- ------------------------------------>
             <div class="game-records">
                 <?php while ($row = $itemsResult->fetch_assoc()) : ?>
                     <div class="game-entry">
@@ -237,6 +250,7 @@ if (isset($_POST['Edit'])) {
                                     ?>
                                 </div>
                                 <button class='edit-button' style='margin-top: 5px;' id="edit-tite" onclick="popupEdit(<?= $row['Game_ID'];?>)" >Edit</button>
+                                <!--Para sa Edit-->
                                 <script>
                                     let editpop = document.getElementById("editpop");
                                     let editpopcon = document.getElementById("editpopcon");
@@ -261,23 +275,66 @@ if (isset($_POST['Edit'])) {
                                         }                 
                                         sendToPHP(tite);
                                     }
-                                    function removepopupEdit(){
+                                    /*function removepopupEdit(){
                                         editpop.style.visibility = 'visible';
                                         editpopcon.style.visibility = 'visible';
                                         //editpop.classList.remove("show-edit");
                                        //editpopcon.classList.remove("show-edit-container");
                                         document.body.style.overflow = 'auto';
                                         document.documentElement.style.overflow = 'auto';
-                                    }
-
+                                    }*/
                                 </script>
                             </div>
                             <div class="game-info-section">
                                 <p class="game-developer"><?php echo $row['Developer_Name']; ?></br></p>
                                 <p class="game-genre"><?php echo $row['Category']; ?></p>
-                                <button class='delete-button' id='$row[id]'>Delete</button>
+                                <!--<button class='delete-button' id='$row[id]'>Delete</button>-->
+                                <button class="delete-button" onclick="openDeletePop(<?= $row['Game_ID']; ?>)">
+                                    <span style="font-family: sans-serif">🗑 Delete</span>
+                                </button>
                             </div>
+                            
+                            <script>
+                                let deletePop = document.getElementById('admin-delete-popUp');
+                                let deletes = document.getElementById('admin-delete-pup');
+                                var continueBtn = document.getElementById('admin-continue-del');
+
+                                function openDeletePop(id) {
+                                    console.log(id);
+                                    deletePop.style.visibility = 'visible';
+                                    deletes.classList.add('popup-con-open');
+                                    document.body.style.overflow = 'hidden';
+                                    document.documentElement.style.overflow = 'hidden';
+                                    continueBtn.addEventListener('click', function() {
+                                        console.log("Continue button clicked!");
+                                        deleteRecord(id);
+                                        
+                                    });
+                                }
+
+                                function deleteRecord(id) {
+                                    console.log(id);
+                                    var xhr = new XMLHttpRequest();
+                                    xhr.open("POST", "delete_game.php", true);
+                                    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                                    xhr.onreadystatechange = function() {
+                                        if (xhr.readyState == 4 && xhr.status == 200) {
+                                            console.log(id);
+                                            window.location.reload();
+                                        }
+                                    };
+                                    xhr.send("id=" + id);
+                                }
+
+                                function removeDeletePop() {
+                                    deletePop.style.visibility = 'hidden';
+                                    deletes.classList.remove('popup-con-open');
+                                    document.body.style.overflow = 'auto';
+                                    document.documentElement.style.overflow = 'auto';
+                                }
+                            </script>
                         </div>
+                        
                     </div>
                 <?php endwhile; ?>
             </div>
