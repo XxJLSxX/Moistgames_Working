@@ -28,17 +28,22 @@ class MoistFunctions {
         return $this->sqlExecute($sql); 
     }
     
-    public function showRecords($tbl, $where=null, $join=null, $col1=null, $col2=null, $wherejoin=null) {
+    public function showRecords($tbl, $where=null, $join=null, $col1=null, $col2=null, $wherejoin=null, $m_join=null) {
         $sql = "SELECT * FROM $tbl";
         if ($where != null) {
             $sql.= " Where $where";
         }
         if ($join != null) {
             $sql.= " Left Join $join ON $col1 = $col2";
+            if ($m_join != null){
+                $sql.= " Left Join $join ON $col1 = $col2";
+                
+            }
             if ($wherejoin != null) {
                 $sql.= " Where $wherejoin";
             }
         }
+        
         return $this->sqlExecute($sql);
     }
 
@@ -119,14 +124,14 @@ class MoistFunctions {
 
             if ($userStatus == '1') {
                 if (password_verify($password, $hashedPassword)) {
-                    $_SESSION['Admin'] = true;
+                    $_SESSION['Admin'] = $userStatus;
                     header("Location: ../Admin/");
                 } else {
                     return "Incorrect Username or Password";
                 }
             } else {
                 if (password_verify($password, $hashedPassword)) {
-                    $_SESSION['User'] = true;
+                    $_SESSION['User'] = $userStatus;
                     header("Location: index.php");
                 } else {
                     return "Incorrect Username or Password";
@@ -256,4 +261,22 @@ class MoistFunctions {
         return $games;
     }
 
+    public function getGameInfo($id) {
+        $game_info = [];
+    
+        $sql = "SELECT g.*, d.Developer_Name
+                FROM Games g
+                INNER JOIN Developer d ON g.Developer_ID = d.Developer_ID
+                WHERE g.Game_ID = ?";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+    
+        if ($result && $result->num_rows > 0) {
+            $game_info = $result->fetch_assoc();
+        }
+    
+        return $game_info;
+    }
 }
