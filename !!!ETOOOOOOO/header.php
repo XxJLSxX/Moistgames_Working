@@ -1,11 +1,52 @@
 <?php
+    require '../Database/MoistFunctions.php';
+    $moistFunction = new MoistFunctions($connection);
+    $moistFunctions = new MoistFunctions($connection);
+    
+    if (isset($_POST['login'])) {
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+
+        $loginMessage = $moistFunctions->loginUser($email, $password);
+
+        if ($loginMessage === true) {    
+        } else {  
+            echo $loginMessage;
+        }
+    }
+
+    if (isset($_POST['register'])) {
+        $name = $_POST['Name'];
+        $username = $_POST['User_Name'];
+        $email = $_POST['Email'];
+        $password = password_hash($_POST['Password'], PASSWORD_BCRYPT);
+        $selectedPaymentMethodID = $_POST['Payment_Method'];
+
+        $data = [
+            'Name' => $name,
+            'User_Name' => $username,
+            'Email' => $email,
+            'Password' => $password,
+        ];
+
+        try {
+            $action = $moistFunctions->UserRegistry($data, $selectedPaymentMethodID, 'Users');
+            header("Location: index.php");
+        } catch (Exception $e) {
+            echo "Error: $e";
+        }
+    }
+
+?>
+
+<?php
 if (isset($_SESSION['User'])) { ?>
     <div class='nav'>
         <img src='../img/logo.png' alt='logo'>
-        <a class='nav-title' href=''>Store</a>
-        <a class='nav-title' href=''>Library</a>
+        <a class='nav-title' href='../Main/index.php'>Store</a>
+        <a class='nav-title' href='../Main/User_Library.php'>Library</a>
         <a class='nav-title' href=''>Purchase History</a>
-        <a class='nav-title' href=''>About Us</a>
+        <a class='nav-title' href='../Main/About_us.php'>About Us</a>
         <button class='search-btn' id='search-button' onclick='opensearch()'><img src='../img/search.png' alt='search'></button>
         <div class='search-popup' id='S-pup'>
             <input type='text' id='search-input' placeholder='Search a game...' autocomplete='off'>
@@ -14,7 +55,7 @@ if (isset($_SESSION['User'])) { ?>
             <img src='../img/default-icon.png' alt'profile'>
             <p><?php $username ?></p>
         </a>
-         <a href="../Database/Logout.php" class='user-logout' > <!-- data-bs-toggle="modal" data-bs-target="#Logout_Form" -->
+         <a href="../Database/Logout.php" class='user-logout'> <!-- data-bs-toggle="modal" data-bs-target="#Logout_Form" -->
             <img src='../img/logout-logo.png' alt'logout'>
         </a>
     </div>
@@ -24,8 +65,8 @@ if (isset($_SESSION['User'])) { ?>
         <a href="../Admin/">
         <img src='../img/logo.png' alt='logo'>
         </a>
-        <a class='nav-title' href='Admin_GameLibrary.php'>Games</a>
-        <a class='nav-title' href='Game_Devs.php'>Game Developers</a>
+        <a class='nav-title' href='../Admin/Admin_GameLibrary.php'>Games</a>
+        <a class='nav-title' href='../Main/Game_Devs.php'>Game Developers</a>
         <a class='nav-title' href=''>Transactions</a>
         <a class='nav-title' href=''>Featured Posts</a>
         
@@ -39,8 +80,8 @@ if (isset($_SESSION['User'])) { ?>
 <?php } else { ?>
     <div class='nav'>
         <img src='../img/logo.png' alt='logo'>
-        <a class='nav-title' href=''>Store</a>
-        <a class='nav-title' href=''>About Us</a>
+        <a class='nav-title' href='../Main/index.php'>Store</a>
+        <a class='nav-title' href='../Main/About_Us.php'>About Us</a>
         <button class='search-btn' id='search-button' onclick='opensearch()'><img src='../img/search.png' alt='search'></button>
         <div class='search-popup' id='S-pup'>
             <input type='text' id='search-input' placeholder='Search a game...' autocomplete='off'>
@@ -53,7 +94,7 @@ if (isset($_SESSION['User'])) { ?>
 
 <html> <!------------------------ Popups ------------------------>
 <!------------------------------------------------------ Sign in ------------------------------------------------------>
-<div class="modal fade" id="Signin-Form" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="Signin-Form" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content" style="background-color: #5d5d5d; border-radius: 10px;">
                 <div class="modal-body">
@@ -132,45 +173,12 @@ if (isset($_SESSION['User'])) { ?>
             </div>
         </div>
     </div>
-
-    <!------------------------------------------------------ Buy Game Popup ------------------------------------------------------>
-    <div class="modal fade" id="Buy-Form" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl modal-dialog-centered">
-            <div class="modal-content" style="background-color: #222; border-radius: 10px;">
-                <div class="modal-body" style="background-color: #222;">
-                    <div class="buy-container">
-                            <div class="game-details">
-                                <img src="../Games/aaaaaaaaaa/Image.png" alt="Game Image" class="game-image">
-                                <h3>Monster Hunter Rise: Sunbreak</h3>
-                                <p>CAPCOM CO., Ltd</p>
-                                <p class="abtn action-abtn">Action</p>
-                                <button class="btn view-details">View Details</button>
-                            </div>  
-
-                        <div class="receipt-details">
-                            <h3 class="receipt-heading">Complete Transaction Details</h3>
-                            <div class="details">
-                                <p><strong>Name:</strong> John Doe</p>
-                                <p><strong>Email:</strong> johndoe@example.com</p>
-                                <p><strong>Payment-Method:</strong> Card</p>
-                            </div>
-                            <hr>
-                            <div class="buy-total-price">
-                                <p><strong>Total Price:</strong> $50.00</p>
-                            </div>
-                            <div class="buy-purchase-id">
-                                <button>Buy game</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
 </html> <!------------------------ Popups End ------------------------>
 
+
+
 <script>
+
     let popup = document.getElementById('S-pup');
     let searchButton = document.getElementById('search-button');
 
@@ -204,13 +212,13 @@ if (isset($_SESSION['User'])) { ?>
             }
         }
     });
-    $(document).ready(function() {
+    (document).ready(function() {
         $('#search-input').on('keyup', function() {
             var getName = $(this).val();
             if (getName.trim() !== '') {
                 $.ajax({
                     method: 'POST',
-                    url: 'search-game.php',
+                    url: '../search-game.php',
                     data: {
                         name: getName
                     },
