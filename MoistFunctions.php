@@ -24,19 +24,29 @@ class MoistFunctions {
     }
     
     public function showAll($tbl) {
-        $sql = "SELECT * FROM $tbl where email != 'admin@moist.com'";
+        $sql = "SELECT * FROM $tbl";
         return $this->sqlExecute($sql); 
     }
     
-    public function showRecords($tbl, $where = null, $join = null, $col1 = null, $col2 = null, $wherejoin = null) {
+    public function showRecords($tbl, $where = null, $join1 = null, $join1col1 = null, $join1col2 = null, $wherejoin1 = null,
+                                $join2 = null, $join2col1 = null, $join2col2 = null, $wherejoin2 = null, $orderBy = null) {
         $sql = "SELECT * FROM $tbl";
-        if ($join != null) {
-            $sql .= " LEFT JOIN $join ON $col1 = $col2";
-            if ($wherejoin != null) {
-                $sql .= " WHERE $wherejoin";
+        if ($join1 != null) {
+            $sql .= " LEFT JOIN $join1 ON $join1col1 = $join1col2";
+            if ($wherejoin1 != null) {
+                $sql .= " WHERE $wherejoin1";
             }
         } elseif ($where != null) {
             $sql .= " WHERE $where";
+        }
+        if ($join2 != null) {
+            $sql .= " LEFT JOIN $join2 ON $join2col1 = $join2col2";
+            if ($wherejoin2 != null) {
+                $sql .= " WHERE $wherejoin2";
+            }
+        }
+        if ($orderBy != null) {
+            $sql .= " ORDER BY $orderBy DESC";
         }
         return $this->sqlExecute($sql);
     }
@@ -122,8 +132,9 @@ class MoistFunctions {
             } else {
                 if (password_verify($password, $hashedPassword)) {
                     $_SESSION['User'] = true;
+                    $_SESSION['User_ID'] = $userData[0][0];
                     header("Location: index.php");
-                } else {
+                } else {    
                     return "Incorrect Username or Password";
                 }
             }
@@ -269,6 +280,43 @@ class MoistFunctions {
     
         return $game_info;
     }
+    
+    public function getTransaction_Data($user_ID = null) {
+        if($user_ID != null) {
+            $user_ID = intval($user_ID);
+        }
+        $sql =  "SELECT
+                    receipt.Receipt_ID,
+                    receipt.Receipt_Date,
+                    receipt.Receipt_Time,
+                    transaction.Transaction_ID,
+                    users.Name,
+                    users.User_Name,
+                    users.Email,
+                    games.Game_Name,
+                    games.Price,
+                    games.Category,
+                    developer.Developer_Name
+                FROM
+                    receipt
+                INNER JOIN
+                    transaction ON receipt.Transaction_ID = transaction.Transaction_ID
+                INNER JOIN
+                    users ON transaction.User_ID = users.User_ID
+                INNER JOIN
+                    games ON transaction.Game_ID = games.Game_ID
+                INNER JOIN
+                    developer ON games.Developer_ID = developer.Developer_ID";
+                if($user_ID != null) {    
+                    $sql .= " WHERE users.User_ID = $user_ID";
+                }
+
+        // Execute the SQL query
+        $transactionData = $this->sqlExecute($sql);
+        
+        return $transactionData;
+    }
+    
     
 
 
